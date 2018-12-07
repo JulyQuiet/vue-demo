@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <modal>
+            <h1 slot="content">是否删除</h1>
+            <p slot="title">确认删除吗？</p>
+        </modal>
+        <modal><span>是否确认</span></modal>
+    </div>
+    <!-- 模版中只能有一个根元素 -->
+    <template id="modal">
+        <div>
+            <slot name="title">默认标题</slot>slot
+            <slot name="content">默认内容</slot>
+            <slot name="default">这是一个默认标题</slot>
+        </div>
+    </template>
+    <script src="./node_modules/vue/dist/vue.js "></script>
+    <script>
+        let modal = {
+            template: '#modal'
+        };
+
+        let vm = new Vue({
+            el: '#app',
+            components: {
+                modal
+            },
+            data: {
+
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

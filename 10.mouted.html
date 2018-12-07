@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p ref='my'></p>
+        <p ref='my2'></p>
+    </div>
+
+    <script src="./node_modules/vue/dist/vue.js "></script>
+    <script>
+        let vm = new Vue({
+                el: '#app',
+                data: {
+                    msg: 'hello',
+                },
+                mounted() {
+                    this.$refs
+                }
+            })
+            // dom渲染是异步的
+            // 你想改变数据并取到最新的结果 用this.$nextTick
+    </script>
+</body>
+
+</html>

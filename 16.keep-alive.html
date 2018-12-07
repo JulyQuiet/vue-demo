@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="radio" v-model="radio" value="home">home <input type="radio" v-model="radio" value="list">list
+        <!--keep-alive 用作缓存 为后面路由做准备 如果缓存了 就不会走created mounted钩子函数-->
+        <!--子组件和父组件同时拥有mounted方法，会先走谁-->
+        <!--先走子组件 先有儿子 再有爸爸 即需要子组件挂载完成后再触发父组件的挂载-->
+        <keep-alive>
+            <component :is="radio"></component>
+        </keep-alive>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let home = {
+            template: `
+                <transition name="slide">  
+                    <div ref="child"><ul><li v-for="a in arr">{{a}}</li></ul></div>
+                </transition> 
+        `,
+            data() {
+                return {
+                    arr: [1, 2, 3]
+                };
+            },
+            mounted() {
+                this.arr = [4, 5, 6]; //此处是异步渲染dom
+            }
+        };
+        let list = {
+            template: `
+        <transition name="fade">
+            <div>list...</div>
+        </transition>
+        `,
+            beforeDestroy() {},
+        };
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                radio: 'home'
+            },
+            components: {
+                home,
+                list,
+            },
+            mounted() {
+                console.log(this.$refs.child)
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <handsome></handsome>
+        <handsome2 />
+        <!-- 3.使用 -->
+    </div>
+
+    <script src="./node_modules/vue/dist/vue.js "></script>
+    <script>
+        // Vue.component('my-handsome', { //一个对象可以看成是一个组件
+        //     template: '<div>{{msg}}</div>',
+        //     data() { //组件中的数据必须是函数类型，返回一个实例作为组件的数据
+        //         return {
+        //             msg: '我很很英俊',
+        //         }
+        //     },
+        // });
+
+        // 1。创建
+        let handsome = {
+            template: '<div>我超级帅</div>'
+        }
+
+        let handsome2 = {
+            template: '<div>我超级美</div>'
+        }
+
+        let vm = new Vue({
+            el: '#app',
+            components: { //2.注册
+                // handsome: handsome es6中名字一样可以写一个
+                handsome,
+                handsome2
+            },
+            data: {
+                a: 1
+            }
+
+        })
+    </script>
+</body>
+
+</html>

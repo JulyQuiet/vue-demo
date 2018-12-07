@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <div id="app">
+    <panel type="warning" @say-title="parent">
+      <div slot="title">标题</div>
+      <div slot="content">内容
+        <p>组件的属性传递</p>
+      </div>
+      <div>尾部：作者：ln</div>
+    </panel>
+  </div>
+
+  <template id="panel">
+    <div class="panel" :class="[color]">
+      <div class="panel-heading" ref="head">
+        <slot name="title"></slot>
+      </div>
+      <div class="panel-body">
+        <slot name="content"></slot>
+      </div>
+      <div class="panel-footer">
+        <slot name="default">匿名</slot>
+        <button @click="say">点我说标题</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="./node_modules/vue/dist/vue.js "></script>
+  <script>
+    let panel = {
+        template: '#panel',
+        computed:{
+           color(){
+               return 'panel-' + this.type;
+           }
+        },
+        created(){
+            // console.log(this.type);// 可以拿到type
+            // this.type = 'panel-' + this.type; 子属性不能更改父组件的传递的属性
+        },
+        props:{
+           type: {// 当前属性
+               type: String,//数据类型
+               default: 'default',//设置的默认属性
+           }
+        },
+        methods: {
+          say(){
+            console.log(this.$refs.head)
+            this.$emit('say-title',this.$refs.head.innerText);
+          }
+        }
+    };
+
+    let vm = new Vue({
+        el: '#app',
+        components:{
+            panel
+        },
+        methods: {
+          parent(tit){
+            alert(tit);
+          }
+        }
+    })
+  </script>
+</body>
+</html>

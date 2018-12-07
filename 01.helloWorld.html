@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- {{msg}} -->
+        <!-- value属性，默认情况下会被vue忽略 掉 slected checked 都没有意义-->
+        <input type="text" v-model="msg">
+        <div v-once="msg">{{msg}}{{msg}}</div>
+        <div v-html="temp"></div>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 引入vue后会给你个vue的构造函数
+        let vm = new Vue({
+            el: '#app',
+            template: '',
+            data: { // data中的数据会被vm所代理
+                msg: 'hello world', // 可以通过vm.msg取到对应内容
+                temp: '<div>html</div>'
+
+            }
+        });
+    </script>
+</body>
+
+</html>

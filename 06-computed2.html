@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全选/反选</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="a">{{msg}}
+    </div>
+
+    <script src="./node_modules/vue/dist/vue.js "></script>
+    <!-- axios 基于promise -->
+    <script src="node_modules/axios/dist/axios.js "></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                a: '',
+                msg: '',
+            },
+            watch: { //只有值变化的时候才会触发 支持异步，其他情况下，我们更常使用computed
+                a(newVal, oldVal) { // watch 的属性名要和观察的人的名字一致
+                    if (newVal < 3) {
+                        return this.msg = 'too short';
+                    }
+
+                    if (newVal > 6) {
+                        return this.msg = 'too long';
+                    }
+
+                    this.msg = '';
+
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

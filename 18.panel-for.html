@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <div id="app">
+      <panel :type="a.type" v-for="(a,index) in articles" :key="index" @say-title="parent">
+          <div slot="title">{{a.title}}</div>
+          <div slot="content">{{a.content}}</div>
+          <div>{{a.footer}}</div>
+      </panel> 
+  </div>
+
+  <template id="panel">
+    <div class="panel" :class="[color]">
+      <div class="panel-heading" ref="head">
+        <slot name="title"></slot>  
+      </div> 
+      <div class="panel-body">
+        <slot name="content"></slot>
+      </div>
+      <div class="panel-footer">
+        <slot name="default">匿名</slot>
+        <br>
+        <button @click="say">点击说标题</button>
+      </div>
+    </div>
+  </template>    
+  
+
+  <script src="./node_modules/vue/dist/vue.js "></script>
+  <script>  
+  let panel = {
+    template: '#panel',
+    props: {
+      type: {
+        type: String,
+        default: 'default'
+      }
+    },
+    computed:{
+      color(){
+        return 'panel-' + this.type;
+      }
+    },
+    methods: {
+      say(){
+        this.$emit('say-title',this.$refs.head.innerText);
+      }
+    }
+
+  }
+
+  let vm = new Vue({
+    el: '#app',
+    components: {
+      panel
+    },
+    data:{
+      articles:[
+        {
+          type: 'warning',
+          title: 'vue',
+          content: 'vue1',
+          footer: 'vue111'
+        },
+        {
+          type: 'danger',
+          title: 'react',
+          content: 'react2',
+          footer: 'react222'
+        }
+      ]
+    },
+    methods:{
+      parent(val){
+        alert(val)
+      }
+    }
+  })
+  </script>
+</body>
+</html>

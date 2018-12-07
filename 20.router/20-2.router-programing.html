@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <router-link :to="{path:'/home'}">首页</router-link>
+    <router-link to="/list">列表页</router-link>
+    <router-view></router-view>
+  </div>
+  <script src="./../node_modules//vue/dist/vue.js"></script>
+  <script src="./../node_modules/vue-router/dist/vue-router.js"></script>
+  <script>
+    let home = {
+      template: '<div>首页<button @click="goList">去列表</button></div>',
+      methods: {
+        goList() {
+          this.$router.push('/list'); //强制跳转路径
+        },
+      }
+    }
+    let list = {
+      template: '<div>列表页<button @click="goBack">返回</button></div>',
+      methods: {
+        goBack() {
+          this.$router.go(-1); // 返回某一级
+        },
+      }
+    }
+    let routes = [{
+      path: '/home',
+      component: home
+    }, {
+      path: '/list',
+      component: list
+    }, {
+      path: '*',
+      redirect: '/'
+    }]
+    let router = new VueRouter({
+      routes
+    })
+    let vm = new Vue({
+      el: '#app',
+      router, // $router放的都是方法 $route存的都是属性
+      methods: {}
+    })
+  </script>
+</body>
+
+</html>

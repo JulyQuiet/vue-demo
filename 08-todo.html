@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+        .del {
+            text-decoration: line-through;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 导航条 -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        todoList
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 面板 -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-2">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading text-danger h3">
+                            <h3>亲，你有 {{count}} 件事情要完成</h3>
+                            <input type="text" class="form-control" v-model="title" @keyup.13="add">
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item" v-for="todo in filterTodos" @dblclick="remember(todo)">
+                                    <span :class="{del:todo.isSelected}" v-show="cur!=todo">
+                                        <input type="checkbox" v-model="todo.isSelected"> {{todo.title}}
+                                    </span>
+                                    <input type="text" v-model="todo.title" v-show="cur==todo" @keyup.enter="cancel" @blur="cancel" v-focus="cur==todo">
+
+                                    <button class="pull-right btn btn-danger btn-xs" @click="remove(todo)">&bigotimes;</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-footer">
+                            <ul class="nav nav-pills">
+                                <li role="presentation" :class="{active:hash=='all'}">
+                                    <a href="#all">全部任务</a>
+                                </li>
+                                <li role="presentation" :class="{active:hash=='finish'}">
+                                    <a href="#finish">已完成</a>
+                                </li>
+                                <li role="presentation" :class="{active:hash=='unfinish'}">
+                                    <a href="#unfinish">未完成</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script src="./node_modules/vue/dist/vue.js "></script>
+    <!-- axios 基于promise -->
+    <script src="node_modules/axios/dist/axios.js "></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            directives: {
+                focus(el, bindings) {
+                    console.log(el, bindings)
+                    if (bindings.value) {
+                        el.focus();
+                    }
+                }
+            },
+            data: {
+                todos: [{
+                    isSelected: false,
+                    title: '睡觉',
+                }, {
+                    isSelected: true,
+                    title: '吃饭',
+                }],
+                title: '',
+                cur: '', // 当前项
+                hash: '',
+            },
+            created() { // 初始化数据
+                this.todos = JSON.parse(localStorage.getItem('data')) || this.todos;
+                // 监控hash值的变化
+                // 如果页面有hash了，重新刷新也要获取hash值
+                this.hash = window.location.hash.slice(1) || 'all';
+                window.addEventListener('hashchange', () => {
+                    this.hash = window.location.hash.slice(1);
+                }, false);
+            },
+            watch: { // watch默认只监控一层的数据变化 想要深度监控
+                // todos() {
+
+                // }
+                todos: {
+                    handler() { // 默认写成函数 相当于默认写了handler
+                        // localStorage默认存的是字符串
+                        localStorage.setItem('data', JSON.stringify(this.todos))
+                    },
+                    deep: true
+                }
+            },
+            methods: {
+                add() {
+                    this.todos.push({
+                        isSelected: false,
+                        title: this.title,
+                    });
+                    this.title = '';
+                },
+                remove(todo) {
+                    this.todos = this.todos.filter(item => item !== todo);
+                },
+                remember(todo) {
+                    this.cur = todo;
+                    console.log(this.cur)
+                },
+                cancel() {
+                    this.cur = '';
+                }
+            },
+            computed: {
+
+                filterTodos() {
+                    switch (this.hash) {
+                        case 'finish':
+                            return this.todos.filter(item => item.isSelected);
+                            break;
+                        case 'unfinish':
+                            return this.todos.filter(item => !item.isSelected);
+                            break;
+                        default:
+                            return this.todos;
+                    }
+                },
+                count() {
+                    return this.todos.filter(item => !item.isSelected).length;
+                },
+            },
+
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+[{
+    "id": 1,
+    "isSelected": true,
+    "productCover": "https://img10.360buyimg.com/cms/s80x80_jfs/t4672/281/50242115/68590/60da4f32/58c8dc2aNc0394f2c.jpg",
+    "productName": "vue",
+    "productInfo": "颜色： vue学习",
+    "productPrice": 57.8,
+    "productCount": 3
+}, {
+    "id": 1,
+    "isSelected": true,
+    "productCover": "https://img10.360buyimg.com/cms/s80x80_jfs/t4672/281/50242115/68590/60da4f32/58c8dc2aNc0394f2c.jpg",
+    "productName": "vue",
+    "productInfo": "颜色： vue学习",
+    "productPrice": 57.8,
+    "productCount": 3
+}]

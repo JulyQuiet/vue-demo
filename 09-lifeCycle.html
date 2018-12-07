@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script src="./node_modules/vue/dist/vue.js "></script>
+    <script>
+        let vm = new Vue({
+            beforeCreate() { // 此方法用不到
+            },
+            data: {
+                a: 1,
+            },
+            created() { // 获取ajax 初始化操作
+            },
+            template: '<div>1</div>',
+            beforeMount() { // 没有什么实际意义
+            },
+            mounted() { // 真实dom渲染完了，可以操作dom了
+            },
+            beforeUpdate() { // 一般用watch替换掉
+            },
+            updated() {},
+            beforeDestroy() { // 可以清除定时器 或者清楚事件绑定
+            },
+            destroyed() {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

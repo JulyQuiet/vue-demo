@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>shoppingCart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- checbox -->
+        爱好：
+        <input type="checkbox" v-model="b" value="游泳">游泳
+        <input type="checkbox" v-model="b" value="爬山">爬山
+        <input type="checkbox" v-model="b" value="睡觉">睡觉
+        <br /> {{b}}
+        <br/>
+        <!-- select -->
+        <!--<select v-model="a" multiple>-->
+        <select v-model="a">
+            <option value="" disabled>请选择</option>
+            <option value="你好">你好</option>
+            <option value="我不好">我不好</option>
+            <option value="为什么不好">为什么不好</option>
+           
+            <!-- 如果value属性不写默认取得是option中的值，请选择这一项要加disabled -->
+        </select> {{a}}
+        <br>
+        <input type="radio" v-model='gender' value='男'>男
+        <input type="radio" v-model='gender' value='女'>女
+        性别：{{gender}}
+        <br>
+        <select v-model="selected" multiple>
+            <!-- 内联对象字面量 -->
+            <option :value="{ number: 123 }">123</option>
+        </select>
+    </div>
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                b: [],
+                a: '',
+                gender: '',
+                selected: []
+            }
+        })
+    </script>
+</body>
+
+</html>
